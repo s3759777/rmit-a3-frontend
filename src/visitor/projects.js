@@ -168,17 +168,7 @@ export default function Projects() {
             <p></p>
             <p></p>
             <Grid container>
-              <Grid item align="left" lg={9}>
-                <Link to="/projectList/new"
-                  style={{ color: "#455a64", width: "20" }}>
-                  <Button
-                    className={classes.buttons}
-                    variant="contained"
-                    color="primary">
-                    <AddIcon /> Create Project
-                  </Button>
-                </Link>
-              </Grid>
+
               <p></p>
               <Grid item align="right">
                 <TextField
