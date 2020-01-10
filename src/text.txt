@@ -1,0 +1,1917 @@
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="/" target="_blank">
+                <img src={logo} width="30" height="30" />
+              </a>
+              <Link to="/" className="navbar-brand">
+                Test App
+              </Link>
+              <div className="collpase navbar-collapse">
+                <ul className="navbar-nav mr-auto">
+                  <li className="navbar-item">
+                    <Link to="/pj/list" className="nav-link">
+                      Projects
+                    </Link>
+                  </li>
+                  <li className="navbar-item">
+                    <Link to="/pj/create" className="nav-link">
+                      Create Project
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+
+
+
+ <Router>
+
+
+       <div>
+       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="/" target="_blank">
+                <img src={logo} height="30" />
+              </a>
+              <Link to="/" className="navbar-brand">
+                RMIT Project Management
+              </Link>
+              <div className="collpase navbar-collapse">
+                <ul className="navbar-nav mr-auto">
+                  <li className="navbar-item">
+                    <Link to="/projects" className="nav-link">
+                      Projects
+                    </Link>
+                  </li>
+                  <li className="navbar-item">
+                  <Link to="/users" className="nav-link">
+                      Users
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+              <br />
+              <div>
+                <Route path="/" exact component={Dashboard} />
+                <Route exact path="/projects" exact component={ProjectList} />
+                <Route exact path="/users" component={UserList} />
+              </div>
+
+
+        </div>
+      </Router>
+
+
+
+      import React, { Component, Fragment } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Dashboard from "./components/dashboard";
+import CreateProject from "./components/createProject";
+import ProjectList from "./components/projectList";
+import UserList from "./components/userList";
+
+import logo from "./logo.png";
+
+import clsx from "clsx";
+
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import Box from "@material-ui/core/Box";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import Container from "@material-ui/core/Container";
+
+import Paper from "@material-ui/core/Paper";
+import MenuIcon from "@material-ui/icons/Menu";
+
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+
+import LayersIcon from "@material-ui/icons/Layers";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import BallotIcon from "@material-ui/icons/Ballot";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+
+
+
+import useStyles from "./useStyles";
+
+import { useRoutes, useRedirect, A } from "hookrouter";
+import routes from "./router"
+
+
+
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <A href="/">RMIT Project Management App</A> {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+
+function App() {
+
+  const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const routeResult = useRoutes(routes);
+
+
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const [expanded, setExpanded] = React.useState([]);
+
+  const handleChange = (event, nodes) => {
+    setExpanded(nodes);
+  };
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+        style={{ backgroundColor: "#90a4ae" }}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
+            <A class="navbar-brand" href="/" target="_blank">
+              <img src={logo} height="30" />
+            </A>
+            Dashboard
+          </Typography>
+
+          <IconButton
+            color="inherit"
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <Badge badgeContent={0} color="secondary">
+              <AccountCircleIcon />
+            </Badge>
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <div>
+            <A href="/" style={{ color: "#455a64" }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+            </A>
+
+            <A href="/projects" style={{ color: "#455a64" }}>
+              <ListItem button color="inherit"
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}>
+                <ListItemIcon>
+                  <EventNoteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Projects" />
+
+              </ListItem>
+
+            </A>
+
+
+          </div>
+        </List>
+        <Divider />
+      </Drawer>
+
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+        {routeResult}
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </Container>
+      </main>
+      <div></div>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+import React, { useState, Fragment, Component } from "react";
+
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+
+import { useRoutes, A } from "hookrouter";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+
+import useStyles from "../useStyles";
+import { Divider } from "@material-ui/core";
+import { render } from "@testing-library/react";
+
+const url = "http://13.251.156.195:8080/products";
+
+const steps = ["Add student", "Student added"];
+
+
+
+
+
+
+
+
+
+
+function AddStudentLayout() {
+  const classes = useStyles();
+  const [selectedDate, handleDateChange] = useState(new Date());
+
+  return (
+
+    <React.Fragment>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h4" align="center">
+              Add a student
+            </Typography>
+
+          </Paper>
+        </main>
+
+        <React.Fragment>
+      <p></p>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="studentName"
+            name="studentName"
+            label="Full name"
+            fullWidth
+            autoComplete="sname"
+            onChange={this.handleChange.bind(this)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={6}>
+          <TextField
+            required
+            id="studentId"
+            name="studentId"
+            label="Student ID"
+            fullWidth
+            autoComplete="sid"
+            onChange={this.handleChange.bind(this)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <TextField
+            required
+            id="year"
+            label="Year"
+            type="number"
+            fullWidth
+            autoComplete="syear"
+            onChange={this.handleChange.bind(this)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              required
+              id="year"
+              views={["year"]}
+              label="Year"
+              fullWidth
+              value={selectedDate}
+              onChange={handleDateChange}
+              autoComplete="syear"
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+      </Grid>
+
+      <Paper className={classes.paper}>
+        <React.Fragment>
+          <div className={classes.buttons}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.save.bind(this)}
+              className={classes.button}
+            >
+              Confirm
+            </Button>
+          </div>
+          )}
+        </React.Fragment>
+      </Paper>
+    </React.Fragment>
+      </React.Fragment>
+  );
+}
+
+class AddStudent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      students: [],
+      _id: "",
+      sid: "",
+      sname: "",
+      syear: "",
+      notDetail: true
+    };
+  }
+
+  fetchData() {
+    fetch(url)
+      .then(res => res.json())
+      .then(json => {
+        var list = json.filter(
+          students => students.id && students.name && students.price
+        );
+        this.setState({ students: list });
+      });
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  save() {
+    fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        name: this.state.sname,
+        id: this.state.sid,
+        price: this.state.syear
+      })
+    })
+      .then(res => res.json())
+      .then(json => this.fetchData());
+  }
+
+  handleChange(e) {
+    var obj = {}
+    obj[e.target.name] = e.target.value
+    this.setState(obj)
+}
+
+  render() {
+    return (z
+      <React.Fragment>
+      <AddStudentLayout/>
+      </React.Fragment>
+    );
+  }
+}
+
+export default AddStudent;
+function AddStudent1() {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+      <Grid>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Grid align="left">
+              <A href="/students">
+                <Button color="primary" className={classes.button}>
+                  Back
+                </Button>
+              </A>
+            </Grid>
+            <Typography component="h1" variant="h4" align="center">
+              Add a student
+            </Typography>
+
+            <p></p>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="studentName"
+                  name="studentName"
+                  label="Full name"
+                  fullWidth
+                  autoComplete="sname"
+                />
+              </Grid>
+              <Grid item xs={12} sm={7} lg={8}>
+                <TextField
+                  required
+                  id="studentId"
+                  name="studentId"
+                  label="Student ID"
+                  fullWidth
+                  autoComplete="sid"
+                />
+              </Grid>
+              <Grid item xs={12} sm={5} lg={4}>
+                <TextField
+                  required
+                  id="year"
+                  label="Year"
+                  type="number"
+                  inputProps={{ min: 1, max: 5 }}
+                  fullWidth
+                  autoComplete="syear"
+                />
+              </Grid>
+            </Grid>
+
+            <div className={classes.buttons}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Confirm
+              </Button>
+            </div>
+          </Paper>
+        </main>
+      </Grid>
+    </React.Fragment>
+  );
+}
+
+
+
+import React, { useState, Fragment, Component, useEffect } from "react";
+
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+
+import { useRoutes, A } from "hookrouter";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import Paper from "@material-ui/core/Paper";
+
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+
+import Typography from "@material-ui/core/Typography";
+
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+
+import Checkbox from "@material-ui/core/Checkbox";
+
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import FormLabel from '@material-ui/core/FormLabel';
+
+import useStyles from "../useStyles";
+
+const url = "http://13.251.156.195:8080/products";
+
+function AddProject() {
+  const [projects, setProjects] = useState([]);
+
+  const [id, setId] = useState(""); //project ID
+  const [name, setName] = useState(""); // project name
+
+  const [assignment, setAssignment] = useState("Choose assignment");
+  const [student, setStudent] = useState("");
+  const [course, setCourse] = useState("Choose course");
+
+  const [semester, setSemester] = useState("");
+  const [tech, setTech] = useState("");
+  const [link, setLink] = useState("");
+  const [scope, setScope] = useState("");
+  const [description, setDescription] = useState("");
+  const [irl, setIrl] = useState("");
+
+  const [isSent, setIsSent] = useState(false);
+
+  const classes = useStyles();
+
+
+  const submit = e => {
+    e.preventDefault();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        id: id,
+        price: semester,
+        description: description,
+        productType: assignment,
+        productTypeId: course,
+      brand: irl,  })
+    })
+      .then(res => res.json())
+      .then(() => setIsSent(true))
+      .catch(() => alert("There was an error, please try again"));
+  };
+
+  const afterMessage = (
+    <React.Fragment>
+      <Grid>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Grid align="left">
+              <A href="/projects">
+                <Button color="primary" className={classes.button}>
+                  Back
+                </Button>
+              </A>
+            </Grid>
+            <p></p>
+            <p>
+              <Typography align="center" variant="h5" gutterBottom>
+                Project created.
+              </Typography>
+            </p>
+            <Typography align="center" variant="subtitle1">
+              The project has been updated to the database.
+            </Typography>
+          </Paper>
+        </main>
+      </Grid>
+    </React.Fragment>
+  );
+
+  const form = (
+    <React.Fragment>
+      <Grid>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Grid align="left">
+              <A href="/projects">
+                <Button color="primary" className={classes.button}>
+                  Back
+                </Button>
+              </A>
+            </Grid>
+            <p></p>
+
+            <p></p>
+            <Typography component="h1" variant="h4" align="left">
+              Create project
+              <p></p>
+              <p></p>
+              <p></p>
+            </Typography>
+
+            <p></p>
+            <Grid container spacing={3}>
+              <Grid item xs={12} align="left">
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="outlined" color="primary" component="span">
+                    Upload Image{" "}
+                    <IconButton
+                      color="primary"
+                      size="small"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </Button>
+                </label>
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h4">Project name</Typography>
+                <p></p>
+                <TextField
+                  onInvalid
+                  variant="outlined"
+                  color="primary"
+                  required
+                  id="name"
+                  name="projectName"
+                  label="Project name"
+                  fullWidth
+                  autoComplete="name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Project ID</Typography>
+                <p></p>
+                <TextField
+                  required
+                  variant="outlined"
+                  color="primary"
+                  id="id"
+                  name="projectId"
+                  label="Project ID"
+                  fullWidth
+                  autoComplete="id"
+                  value={id}
+                  onChange={e => setId(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Assignment</Typography>
+                <p></p>
+                <Select
+                  onChange={e => setAssignment(e.target.value)}
+                  id="assignment"
+                  variant="outlined"
+                  color="primary"
+                  FormHelperText="Ok"
+                  fullWidth
+                >
+                  <MenuItem disabled value="">
+                    <em>Choose assignment</em>
+                  </MenuItem>
+                  <MenuItem value="kick">A</MenuItem>
+                  <MenuItem value={assignment}>{assignment}</MenuItem>
+                </Select>
+              </Grid>
+
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Course</Typography>
+                <p></p>
+                <Select
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setCourse(e.target.value)}
+                  id="course"
+                  fullWidth
+                >
+                  <MenuItem disabled value="">
+                    <em>Choose course</em>
+                  </MenuItem>
+                  <MenuItem value="kick">A</MenuItem>
+                  <MenuItem value={course}>{course}</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Semester</Typography>
+                <p></p>
+                <TextField
+                  id="semester"
+                  name="Semester"
+                  label="Semester"
+                  fullWidth
+                  autoComplete="semester"
+                  value={semester}
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setSemester(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Application</Typography><p></p>
+                <Typography variant="subtitle3">Applied in real life or not?</Typography>
+
+                <RadioGroup
+                  aria-label="Application"
+                  name="gender2"
+                  value={irl}
+                  onChange={e => setIrl(e.target.value)}
+                ><FormControlLabel value="yes" label="Yes"control={<Radio color="primary" />} label="Yes" />
+                <FormControlLabel value="no" label="No"control={<Radio color="primary" />} label="No" />
+                </RadioGroup>
+
+              </Grid>
+
+
+              {/*<Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Technology use</Typography>
+                <p></p>
+                <TextField
+                  id="tech"
+                  name="Technology"
+                  label="Technology to be used in this project"
+                  fullWidth
+                  autoComplete="technology"
+                  value={tech}
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setTech(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Scope</Typography>
+                <p></p>
+                <TextField
+                  id="scope"
+                  name="Scope"
+                  label="Define project scope"
+                  fullWidth
+                  autoComplete="scope"
+                  value={scope}
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setScope(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="h5">Link to Industry</Typography>
+                <p></p>
+                <TextField
+                  id="link"
+                  name="Link"
+                  label="e.g: https://examplepage.com/"
+                  fullWidth
+                  autoComplete="link"
+                  value={link}
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setLink(e.target.value)}
+                />
+              </Grid>*/}
+              <Grid item xs={12}>
+                <Typography variant="h5">Description</Typography>
+                <p></p>
+                <TextField
+                  id="description"
+                  name="description"
+                  label="Enter description"
+                  fullWidth
+                  autoComplete="description"
+                  value={description}
+                  variant="outlined"
+                  color="primary"
+                  onChange={e => setDescription(e.target.value)}
+                  multiline
+                  rows="8"
+                />
+              </Grid>
+            </Grid>
+
+            <div className={classes.buttons}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={submit}
+                disabled={
+                  !name ||
+                  !id ||
+                  !course ||
+                  !assignment ||
+                  !semester ||
+                  !irl
+                    ? true
+                    : false
+                }
+              >
+                Confirm
+              </Button>
+            </div>
+          </Paper>
+        </main>
+      </Grid>
+    </React.Fragment>
+  );
+
+  if (isSent) return afterMessage;
+  else return form;
+}
+
+export default AddProject;
+
+
+
+
+import React, { Component, useState, useEffect } from "react";
+import axios from "axios";
+
+import { useRoutes, A } from "hookrouter";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { lighten, makeStyles } from "@material-ui/core/styles";
+import { Grid, TextField } from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Fab from "@material-ui/core/Fab";
+import SearchIcon from '@material-ui/icons/Search';
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import EditIcon from "@material-ui/icons/Edit";
+
+import Dialog from "@material-ui/core/Dialog";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import AppBar from "@material-ui/core/AppBar";
+import InputAdornment from '@material-ui/core/InputAdornment';
+
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+
+import useStyles from "../useStyles";
+
+const url = "http://13.251.156.195:8080/products";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+function EnhancedTable() {
+  const classes = useStyles();
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("name");
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [students, setStudents] = useState([]);
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [year, setYear] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [editing, setEditing] = useState(false);
+
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  function desc(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function stableSort(array, cmp) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = cmp(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map(el => el[0]);
+  }
+
+  function getSorting(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => desc(a, b, orderBy)
+      : (a, b) => -desc(a, b, orderBy);
+  }
+
+  const headCells = [
+    { id: "name", numeric: false, disablePadding: false, label: "Name" },
+    { id: "id", numeric: false, disablePadding: false, label: "Student ID" },
+    { id: "year", numeric: true, disablePadding: false, label: "Year" },
+    { id: "action", numeric: true, disablePadding: false, label: "Action" }
+  ];
+
+  function EnhancedTableHead(props) {
+    const { classes, order, orderBy, onRequestSort } = props;
+    const createSortHandler = property => event => {
+      onRequestSort(event, property);
+    };
+
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell></TableCell>
+          {headCells.map(headCell => (
+            <TableCell
+              key={headCell.id}
+              align={headCell.numeric ? "right" : "left"}
+              padding={headCell.disablePadding ? "none" : "default"}
+              sortDirection={orderBy === headCell.id ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <span className={classes.visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    );
+  }
+
+  EnhancedTableHead.propTypes = {
+    classes: PropTypes.object.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired
+  };
+
+  const useToolbarStyles = makeStyles(theme => ({
+    root: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
+    },
+    highlight:
+      theme.palette.type === "light"
+        ? {
+            color: theme.palette.secondary.main,
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+          }
+        : {
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.secondary.dark
+          },
+    title: {
+      flex: "1 1 100%"
+    }
+  }));
+
+  const initialFormState = { id: null, name: "", year: "" };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const EnhancedTableToolbar = props => {
+    const classes = useToolbarStyles();
+    const { numSelected } = props;
+
+    return (
+      <Toolbar className={classes.root}>
+        <Typography className={classes.title} variant="h4" id="tableTitle">
+          Student List
+        </Typography>
+
+        <Tooltip title="Filter list">
+          <IconButton aria-label="filter list">
+            <Typography variant="subtitle2"> Filter</Typography>
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+    );
+  };
+
+  EnhancedTableToolbar.propTypes = {
+    numSelected: PropTypes.number.isRequired
+  };
+
+  useEffect(() => {
+    axios
+      .get(url)
+      .then(res => {
+        var list = res.data.filter(
+          products => products.id && products.name && products.price
+        );
+        setStudents(list);
+        setIsLoading(false);
+      })
+      .catch(() => alert("There was an error, please try again"));
+  }, []);
+
+
+  const deleteStudent = id => {
+    axios
+      .delete(url + "/" + id)
+      .then(res => {
+        setStudents(res.data);
+        setIsLoading(false);
+      })
+      .catch(() => alert("There was an error, please try again"));
+  };
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChange = event => {
+    setSearchTerm(event.target.value);
+  };
+
+  React.useEffect(() => {
+    const results = students.filter(student =>
+      student.name.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
+
+
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, students.length - page * rowsPerPage);
+
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+
+
+
+          <A href="/">
+            <Button color="primary" className={classes.button}>
+              Back
+            </Button>
+          </A>
+
+
+        <EnhancedTableToolbar  />
+        <Grid ><Grid align="left">
+        <A href="/students/new" style={{ color: "#455a64", width: "20" }}>
+          <Button className={classes.buttons} color="primary">
+            <AddIcon /> Add students{" "}
+          </Button>
+        </A> </Grid><Grid   align="right">
+        <TextField onChange={handleChange}
+        className={classes.margin} variant="outlined" size="small"
+        id="input-with-icon-textfield" placeholder="Search"  value={searchTerm}
+        InputProps={{startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>),}}/></Grid></Grid>
+
+        <br />
+        <TableContainer>
+          <Table
+            style={{ tableLayout: "1000px" }}
+            padding="none"
+            className={classes.table}
+            aria-labelledby="tableTitle"
+            aria-label="enhanced table"
+          >
+            {isLoading && <CircularProgress color="secondary" />}
+            <EnhancedTableHead
+              classes={classes}
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={students.length}
+            />
+            <TableBody>
+              {stableSort(students, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    <TableRow
+                      padding="none"
+                      hover
+                      onClick={event => handleClick(event, row.name)}
+                      tabIndex={-1}
+                      key={row.name}
+                    >
+                      <TableCell></TableCell>
+                      <TableCell component="th" scope="row" padding="default">
+                        <A href={`/students/${row.id}`} color="inherit">
+                          {row.name}
+                        </A>
+                      </TableCell>
+                      <TableCell align="left">{row.id}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+
+                      <TableCell align="right">
+                        <A href={`/students/${row.id}`}>
+                          {" "}
+                          <Tooltip title="View" aria-label="view">
+                            <IconButton color="default">
+                              <VisibilityIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </A>
+                        <Tooltip title="Edit" aria-label="edit">
+                          <IconButton color="primary" onClick={handleClickOpen}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                          <IconButton
+                            color="secondary"
+                            aria-label="delete"
+                            onClick={e => {
+                              if (window.confirm("Delete this student?")) {
+                                deleteStudent(id);
+                              }
+                            }}
+                          >
+                            <Typography variant="subtitle2"></Typography>{" "}
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={students.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <div>
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar
+            className={classes.appBar}
+            color="secondary"
+            style={{
+              backgroundImage:
+                "url(https://wallpaperboat.com/wp-content/uploads/2019/06/minimalist-desktop-5.jpg)"
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                Edit
+              </Typography>
+
+              <Button autoFocus color="inherit" onClick={handleClose}>
+                Save
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <React.Fragment>
+            <Grid>
+              <main className={classes.layout}>
+                <Paper className={classes.paper}>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <Typography component="h1" variant="h4" align="center">
+                    Edit student information
+                  </Typography>
+
+                  <p></p>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <TextField
+                        onInvalid
+                        required
+                        id="name"
+                        name="studentName"
+                        label="Full name"
+                        fullWidth
+                        autoComplete="name"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={7} lg={7}>
+                      <TextField
+                        required
+                        id="id"
+                        name="studentId"
+                        label="Student ID"
+                        fullWidth
+                        autoComplete="id"
+                        value={id}
+                        onChange={e => setId(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={5} lg={5}>
+                      <TextField
+                        required
+                        id="year"
+                        name="Year"
+                        label="Year"
+                        type="number"
+                        fullWidth
+                        inputProps={{ min: 1, max: 5 }}
+                        autoComplete="year"
+                        value={year}
+                        onChange={e => setYear(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </main>
+            </Grid>
+          </React.Fragment>
+        </Dialog>
+      </div>
+    </div>
+  );
+}
+
+export default class Students extends Component {
+  render() {
+    return (
+      <div>
+        <EnhancedTable />
+      </div>
+    );
+  }
+}
+
+
+
+
+
+import React, { Component, useMemo, useState, useEffect } from "react";
+import { useRoutes, A } from "hookrouter";
+import {
+  Paper,
+  Button,
+  TextField,
+  InputAdornment,
+  Grid,
+  Table,
+  TableRow,
+  TableBody,
+  TableHead,
+  TableCell,
+  Toolbar,
+  Dialog,
+  AppBar,
+  Slide,
+  Typography,
+  Tooltip,
+  IconButton,
+  CircularProgress
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import SaveIcon from "@material-ui/icons/Save";
+
+import useStyles from "../useStyles";
+import axios from "axios";
+import { useTable, useFilters, useSortBy, usePagination } from "react-table";
+
+const url = "http://localhost:9000/assignments";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function Assigments() {
+  const classes = useStyles();
+  const [data, setData] = useState([]);
+  const [selectedId, setSelectedId] = useState();
+  const [assignments, setAssigments] = useState([]);
+  const [assignmentDescription, setAssigmentDescription] = useState([""]);
+  const [serverID, setServerID] = useState("");
+  const [assignmentName, setAssigmentName] = useState("");
+  const [assignmentPercentage, setAssigmentPercentage] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+
+
+
+
+  function updateItem(id) {
+    fetch(url + "/" + id, {
+      method: "put",
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'},
+      body: JSON.stringify({
+        assignmentDescription: assignmentDescription,
+        assignmentName: assignmentName,
+        assignmentPercentage: assignmentPercentage
+      }) //change param here
+    })
+      .then(res => res.json())
+      .then(() => window.location.reload())
+      .catch(() => alert("There was an error, please try again"));
+  };
+
+  function deleteItem(id) {
+    fetch(url + "/" + id, {
+      method: "delete"
+    })
+      .then(res => res.json())
+      .then(() => window.location.reload())
+      .catch(() => alert("There was an error, please try again"));
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  function editItem(assignmentName, assignmentDescription, assignmentPercentage, serverID) {
+    setAssigmentName(assignmentName);
+    setAssigmentDescription(assignmentDescription);
+    setAssigmentPercentage(assignmentPercentage);
+    setServerID(serverID)
+  }
+
+  // Using useEffect to call the API once mounted and set the data
+
+  useEffect(() => {
+    (async () => {
+      const result = await axios(url);
+      var list = result.data.filter(
+        products =>
+          products.assignmentDescription && products.assignmentName && products.assignmentPercentage
+      );
+      setData(list);
+      setIsLoading(false);
+    })();
+  }, []);
+
+  function Table0({ columns, data }) {
+    const [filterInput, setFilterInput] = useState("");
+
+    // Use the state and functions returned from useTable to build your UI
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      prepareRow,
+      setFilter,
+      pageOptions,
+      page,
+      state: { pageIndex, pageSize },
+      previousPage,
+      nextPage,
+      setPageSize,
+      canPreviousPage,
+      canNextPage
+    } = useTable(
+      {
+        columns,
+        data
+      },
+      useFilters,
+      useSortBy,
+      usePagination
+    );
+
+    const handleFilterChange = e => {
+      const value = e.target.value || undefined;
+      setFilter("assignmentName", value);
+      setFilterInput(value);
+    };
+
+    // Render the UI for your table
+    return (
+      <>
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
+            <Typography className={classes.title} variant="h4" id="tableTitle">
+              Assigment List
+            </Typography>
+            <p></p>
+            <p></p>
+            <Grid container>
+              <Grid item align="left" lg={9}>
+                <A
+                  href="/assignments/new"
+                  style={{ color: "#455a64", width: "20" }}>
+                  <Button
+                    className={classes.buttons}
+                    variant="contained"
+                    color="primary">
+                    <AddIcon /> Add assignment
+                  </Button>
+                </A>
+              </Grid>
+              <p></p>
+              <Grid item align="right">
+                <TextField
+                  onChange={handleFilterChange}
+                  className={classes.margin}
+                  variant="outlined"
+                  size="small"
+                  id="input-with-icon-textfield"
+                  placeholder="Search"
+                  value={filterInput}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <br />
+            <div>
+              <Grid align="center">
+                <Button
+                  color="primary"
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  <ChevronLeftIcon />
+                </Button>
+                Page{" "}
+                <em>
+                  {pageIndex + 1} of {pageOptions.length}
+                </em>
+                <Button
+                  color="primary"
+                  onClick={() => nextPage()}
+                  disabled={!canNextPage}
+                >
+                  <ChevronRightIcon />
+                </Button>
+                <select
+                  value={pageSize}
+                  onChange={e => {
+                    setPageSize(Number(e.target.value));
+                  }}
+                >
+                  {[5, 10, 20].map(pageSize => (
+                    <option key={pageSize} value={pageSize}>
+                      Show {pageSize}
+                    </option>
+                  ))}
+                </select>
+              </Grid>
+            </div>
+            <Grid>
+              <Table {...getTableProps()}>
+                <TableHead>
+                  {headerGroups.map(headerGroup => (
+                    <TableRow {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map(column => (
+                        <TableCell
+                          {...column.getHeaderProps(
+                            column.getSortByToggleProps()
+                          )}
+                          className={
+                            column.isSorted
+                              ? column.isSortedDesc
+                                ? "sort-desc"
+                                : "sort-asc"
+                              : ""
+                          }
+                        >
+                          {column.render("Header")}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHead>
+                <TableBody {...getTableBodyProps()}>
+                  {isLoading && <CircularProgress color="secondary" />}
+                  {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                      <TableRow {...row.getRowProps()}>
+                        {row.cells.map(cell => {
+                          return (
+                            <TableCell
+                              {...cell.getCellProps()}
+                              assignmentId={assignmentDescription}
+                            >
+                              {cell.render("Cell")}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </Grid>
+          </Paper>
+        </div>
+      </>
+    );
+  }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        id: "assignmentName",
+        accessor: "assignmentName"
+      },
+
+
+      {
+        Header:  <div style={{ textAlign: "right" }}>
+           Percentage
+         </div>,
+        id: "assignmentPercentage",
+        accessor: "assignmentPercentage",
+        Cell: ({row}) => (<div style={{ textAlign: "right" }}>{row.original.assignmentPercentage}</div>)
+      },
+      {
+        Header: <div style={{ textAlign: "center" }}>
+           Description
+         </div>,
+        id: "assignmentDescription",
+        accessor: "assignmentDescription",
+        Cell: ({row}) => (<div style={{ textAlign: "center" }}>{row.original.assignmentDescription}</div>)
+      },
+      {
+        Header: () => (<div style={{textAlign: "right"}}>
+            Action
+          </div>
+        ),
+        id: "action",
+        Cell: ({ row }) => (
+          <div style={{ textAlign: "right" }}>
+            <A href={`/assignments/${row.original._id}`}>
+              <Tooltip title="View" aria-label="view">
+                <IconButton color="default">
+                  <VisibilityIcon />
+                </IconButton>
+              </Tooltip>
+            </A>
+            <Tooltip title="Edit" aria-label="edit">
+              <IconButton
+                color="primary"
+                onClick={e => {
+                  handleClickOpen(e);
+                  editItem(row.original.assignmentName, row.original.assignmentDescription, row.original.assignmentPercentage, row.original._id);
+                }}
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                color="secondary"
+                onClick={() => {
+                  {
+                    window.confirm(
+                      "Delete this assignment? \n" + row.original.assignmentName
+                    )
+                      ? deleteItem(row.original._id)
+                      : alert("Action cancelled.");
+                  }
+                }}
+                aria-label="delete"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        )
+      }
+    ],
+    []
+  );
+
+  return (
+    <div>
+      <div>
+        <Table0 columns={columns} data={data} />
+
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar
+            className={classes.appBar}
+            color="secondary"
+            style={{
+              backgroundImage:
+                "url(https://wallpaperboat.com/wp-content/uploads/2019/06/minimalist-desktop-5.jpg)"
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+
+              <Typography variant="h6" className={classes.title}>
+                Edit
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <React.Fragment>
+            <Grid>
+              <main className={classes.layout}>
+                <Paper className={classes.paper}>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <Typography component="h1" variant="h4" align="center">
+                    Edit assignment information
+                  </Typography>
+
+                  <p></p>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} spacing={3} >
+                      <TextField
+                        onInvalid
+                        required
+                        id="assignmentName"
+                        name="assignmentName"
+                        label="Name"
+                        fullWidth
+                        autoComplete="assignmentName"
+                        value={assignmentName}
+                        onChange={e => setAssignmentName(e.target.value)}
+                      />
+                    </Grid>
+
+                    <Grid item xs={10}  sm={10} lg={10}>
+
+
+                      <Typography id="input-slider" style={{ color: "#757575" }} gutterBottom>
+                        Percentage*
+                      </Typography>
+
+                        <Slider
+                        getAriaValueText={valuetext}
+                        valueLabelDisplay="auto"
+                          value={typeof assignmentPercentage === "number" ? assignmentPercentage : 0}
+                          onChange={handleSliderChange}
+                          aria-labelledby="input-slider"
+                        />
+                        </Grid>
+                        <Grid item xs={2} sm={2} lg={2}  >
+                            <p></p>
+                        <Input
+                          required
+                          margin="dense"
+                          className={classes.input}
+                          value={assignmentPercentage}
+                          onChange={handleInputChange}
+                          onBlur={handleBlur}
+                          inputProps={{
+                            step: 5,
+                            min: 0,
+                            max: 100,
+                            type: "number",
+                            "aria-labelledby": "input-slider"
+                          }}
+                        />%</Grid>
+
+
+
+
+
+
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="assignmentDescription"
+                        name="assignmentDescription"
+                        label="Description"
+                        fullWidth
+                        autoComplete="assignmentDescription"
+                        value={assignmentDescription}
+                        onChange={e => setAssignmentDescription(e.target.value)}
+                        multiline
+
+                      />
+                    </Grid>
+                  </Grid>
+
+
+                    <Grid align="right" item xs={12}>
+                      <Button
+                        autoFocus
+                        color="secondary"
+                        onClick={() => {
+                          handleClose();
+                          window.confirm(
+                            "Delete this assignment? \n" + assignmentName
+                          )
+                            ? deleteItem(serverID)
+                            : alert("Action cancelled.");
+                        }}
+                      >
+                        <DeleteIcon /> Delete
+                      </Button>
+                      <Button
+                        autoFocus
+                        color="primary"
+                        onClick={() => {
+                          handleClose();
+                          window.confirm(
+                            "Update this assignment? \n" + assignmentName
+                          )
+                            ? updateItem(serverID)
+                            : alert("Action cancelled.");
+                        }}
+                      >
+                        <SaveIcon />
+                        Save
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </main>
+            </Grid>
+          </React.Fragment>
+        </Dialog>
+      </div>
+    </div>
+  );
+}
