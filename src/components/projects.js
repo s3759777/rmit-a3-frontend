@@ -85,9 +85,9 @@ export default function Projects() {
 
 
 
-  const urlAssignment = "http://localhost:9000/assignments";
-  const urlCourse = "http://localhost:9000/courses";
-  const urlStudents = "http://localhost:9000/students";
+  const urlAssignment = "https://serene-lowlands-53583.herokuapp.com/assignments";
+  const urlCourse = "https://serene-lowlands-53583.herokuapp.com/courses";
+  const urlStudents = "https://serene-lowlands-53583.herokuapp.com/students";
 
 
   const [serverID, setServerID] = useState("");
