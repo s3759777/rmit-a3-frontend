@@ -1,4 +1,4 @@
-const url = "http://localhost:9000/admins";
+const url = "https://serene-lowlands-53583.herokuapp.com/admins";
 
 export const authenticate = (data, next) => {
   if (typeof window !== "undefined") {
