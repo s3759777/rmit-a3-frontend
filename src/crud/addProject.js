@@ -48,10 +48,10 @@ function AddProject() {
 
   const classes = useStyles();
 
-  const url = "http://localhost:9000/projects";
-  const urlAssignment = "http://localhost:9000/assignments";
-  const urlCourse = "http://localhost:9000/courses";
-  const urlStudents = "http://localhost:9000/students";
+  const url = "https://serene-lowlands-53583.herokuapp.com/projects";
+  const urlAssignment = "https://serene-lowlands-53583.herokuapp.com/assignments";
+  const urlCourse = "https://serene-lowlands-53583.herokuapp.com/courses";
+  const urlStudents = "https://serene-lowlands-53583.herokuapp.com/students";
 
   const onChange = e => {
     setPhoto(e.target.files[0]);
