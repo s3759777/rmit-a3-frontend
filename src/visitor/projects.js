@@ -37,7 +37,7 @@ import useStyles from "../useStyles";
 import axios from "axios";
 import { useTable, useFilters, useSortBy, usePagination } from "react-table";
 
-const url = "http://localhost:9000/projects";
+const url = "https://serene-lowlands-53583.herokuapp.com/projects";
 
 
 
