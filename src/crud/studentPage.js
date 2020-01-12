@@ -8,7 +8,7 @@ import axios from "axios";
 
 import Layout from "../Layout"
 
-const url = "http://localhost:9000/students/";
+const url = "https://serene-lowlands-53583.herokuapp.com/students/";
 
 
 
