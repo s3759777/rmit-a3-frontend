@@ -37,7 +37,7 @@ import axios from "axios";
 import { useTable, useFilters, useSortBy, usePagination } from "react-table";
 
 //remember to change url
-const url = "http://localhost:9000/courses";
+const url = "https://serene-lowlands-53583.herokuapp.com/courses";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
