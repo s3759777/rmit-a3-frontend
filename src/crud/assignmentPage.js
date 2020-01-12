@@ -16,7 +16,7 @@ export default function AssignmentPage( props ) {
 
     const {aId} = props.match.params.id;
 
-  const url = "http://localhost:9000/assignments/";
+  const url = "https://serene-lowlands-53583.herokuapp.com/assignments/";
 
 
 
