@@ -19,7 +19,7 @@ import Slider from "@material-ui/core/Slider";
 import Layout from "../Layout"
 import useStyles from "../useStyles";
 
-const url = "http://localhost:9000/assignments";
+const url = "https://serene-lowlands-53583.herokuapp.com/assignments";
 
   function AddAssignment() {
     const [Assignments, setAssignments] = useState([]);
