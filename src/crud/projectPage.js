@@ -7,7 +7,7 @@ import { A } from "hookrouter"
 import Layout from "../Layout"
 import axios from "axios";
 
-const url = "http://localhost:9000/projects/";
+const url = "https://serene-lowlands-53583.herokuapp.com/projects/";
 
 
 
