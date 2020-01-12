@@ -19,7 +19,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Layout from "../Layout"
 import useStyles from "../useStyles";
 
-const url = "http://localhost:9000/courses";
+const url = "https://serene-lowlands-53583.herokuapp.com/courses";
 
 //change db values:
 //name: studentName > courseName //id: studentID > courseID
