@@ -16,7 +16,7 @@ import Layout from "../Layout"
 
 import useStyles from "../useStyles";
 
-const url = "http://localhost:9000/students";
+const url = "https://serene-lowlands-53583.herokuapp.com/students";
 
 function AddProject() {
   const [projects, setProjects] = useState([]);
