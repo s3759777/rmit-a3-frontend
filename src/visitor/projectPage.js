@@ -57,7 +57,7 @@ export default function ProjectPage( props ) {
               <main className={classes.layout}>
                   <Paper className={classes.paper}>
                   <Grid align="left">
-                      <Link to="/projectList">
+                      <Link to="/visitor/projects">
                         <Button color="primary" className={classes.button}>
                           Back
                         </Button>
